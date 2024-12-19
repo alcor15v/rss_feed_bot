@@ -36,7 +36,7 @@ Here's an example of the embed message the bot sends:
 
 4. **Make sure `main.py` and `config.py` are in the same directory.**
 
-5. **Run `main.py`.
+5. **Run `main.py`.**
 
 
 If you'd like additional features or run into issues, feel free to drop a note in the Issues section!

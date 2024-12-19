@@ -8,7 +8,7 @@ A lightweight Discord bot that checks RSS feeds for new posts and shares them in
 
 ## Example Output
 Here's an example of the embed message the bot sends:
-![Example Embed](https://github.com/alcor15v/reddit-feed-bot/blob/main/example_embed.png?raw=true)
+![Example Embed](https://github.com/alcor15v/rss_feed_bot/blob/main/example_embed.png?raw=true)
 
 ## Prerequisites
 - Python 3.8 or higher

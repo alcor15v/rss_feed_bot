@@ -38,5 +38,6 @@ Here's an example of the embed message the bot sends:
 
 5. **Run `main.py`.**
 
+---
 
 If you'd like additional features or run into issues, feel free to drop a note in the Issues section!

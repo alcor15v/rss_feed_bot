@@ -10,7 +10,6 @@ discord.py==2.3.2
 feedparser==6.0.11
 frozenlist==1.4.1
 idna==3.7
-isc==2.0
 lxml==5.2.1
 multidict==6.0.5
 ply==3.11

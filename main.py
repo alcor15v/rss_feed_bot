@@ -39,7 +39,7 @@ def get_new_articles():
             if not article_in_db(entry):
                 pub_date = datetime.strptime(entry.published, "%Y-%m-%dT%H:%M:%S%z").replace(tzinfo=timezone.utc)
                 if datetime.now(timezone.utc) - pub_date <= timedelta(days=LAST_ARTICLE_RANGE):
-                    new_articles.append({"article": entry, "must_include_string":rss_feed["must_include_string"]})
+                    new_articles.append({"article": entry, "keyword_filter":rss_feed["keyword_filter"]})
     return new_articles
 
 '''Verifies if the article is already in the database'''
@@ -52,7 +52,7 @@ def article_in_db(entry):
 
 '''Makes the content of the post look cleaner'''
 def format_to_message(article):
-    if article["must_include_string"].upper() in (article["article"].title).upper():
+    if article["keyword_filter"].upper() in (article["article"].title).upper():
         article_title = article["article"].title
         article_link = article["article"].link
         article_content = extract_content(str(article["article"].content[0].value))
@@ -83,11 +83,20 @@ def record_article_in_db(article):
     c.execute("INSERT INTO articles (title, link, date) VALUES (?, ?, ?)", (article.title, article.link, datetime.today().strftime('%Y-%m-%d')))
     connection.commit()
 
+'''Deletes old articles from the database'''
+@tasks.loop(hours=24)
+def delete_old_articles():
+    delete_before_date = (datetime.now() - timedelta(days=LAST_ARTICLE_RANGE)).strftime('%Y-%m-%d')
+    c.execute("DELETE FROM articles WHERE date < ?", (delete_before_date,))
+    connection.commit()
+    print(f'Articles older than {delete_before_date} have been deleted.')
+
 '''The bot starts looping the task once it's connected'''
 @bot.listen()
 async def on_ready():
     print(f'{bot.user} has connected to Discord!')
     post_new_articles.start()
+    delete_old_articles.start()
 
 '''Starts the bot so it connects to discord'''
 if __name__ == "__main__":

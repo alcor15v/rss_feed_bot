@@ -41,4 +41,4 @@ Here's an example of the embed message the bot sends:
 ---
 
 ## Credits
-https://hansimcklaus.iwr.sh/post/how-to-create-a-simple-rss-bot-for-discord/
+I got the skeleton of the code from this source: https://hansimcklaus.iwr.sh/post/how-to-create-a-simple-rss-bot-for-discord/

@@ -40,7 +40,5 @@ Here's an example of the embed message the bot sends:
 
 ---
 
-If you'd like additional features or run into issues, feel free to drop a note in the Issues section!
-
 ## Credits
 https://hansimcklaus.iwr.sh/post/how-to-create-a-simple-rss-bot-for-discord/

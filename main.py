@@ -9,15 +9,17 @@ import re
 from config import TOKEN, CHANNEL_ID, UPDATE_INTERVAL, LAST_ARTICLE_RANGE, RSS_FEEDS, CONTENT_SIZE, EMBED_COLOR
 
 NO_EXECUTE = 'NO'
-
-'''Connects to the database and creates the table if it doesn't exist'''
-connection = sqlite3.connect('articles.db')
-c = connection.cursor()
-c.execute('''CREATE TABLE IF NOT EXISTS articles (title TEXT, link TEXT, date TEXT)''')
-connection.commit()
+DATABASE = 'articles.db'
 
 '''Creates the bot instance'''
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
+
+'''Connects to the database and creates the table if it doesn't exist'''
+def create_table():
+    connection = sqlite3.connect(DATABASE)
+    cursor = connection.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS articles (title TEXT, link TEXT, date TEXT)''')
+    connection.commit()
 
 '''Main task'''
 @tasks.loop(minutes=UPDATE_INTERVAL)
@@ -44,11 +46,13 @@ def get_new_articles():
 
 '''Verifies if the article is already in the database'''
 def article_in_db(entry):
-    c.execute("SELECT link FROM articles WHERE link=?", (entry.link,))
-    if c.fetchone() is None:
-        return False
-    else:
-        return True
+    with sqlite3.connect(DATABASE) as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT link FROM articles WHERE link=?", (entry.link,))
+        if cursor.fetchone() is None:
+            return False
+        else:
+            return True
 
 '''Makes the content of the post look cleaner'''
 def format_to_message(article):
@@ -80,15 +84,19 @@ def create_embed(article_title, article_link, article_content):
 '''Saves the article in the databse so it doesn't post it on the discord channel again'''
 def record_article_in_db(article):
     today_date = datetime.today().replace(tzinfo=timezone.utc)
-    c.execute("INSERT INTO articles (title, link, date) VALUES (?, ?, ?)", (article.title, article.link, datetime.today().strftime('%Y-%m-%d')))
-    connection.commit()
+    with sqlite3.connect(DATABASE) as connection:
+        cursor = connection.cursor()
+        cursor.execute("INSERT INTO articles (title, link, date) VALUES (?, ?, ?)", (article.title, article.link, datetime.today().strftime('%Y-%m-%d')))
+        connection.commit()
 
 '''Deletes old articles from the database'''
 @tasks.loop(hours=24)
 async def delete_old_articles():
     delete_before_date = (datetime.now() - timedelta(days=LAST_ARTICLE_RANGE)).strftime('%Y-%m-%d')
-    c.execute("DELETE FROM articles WHERE date < ?", (delete_before_date,))
-    connection.commit()
+    with sqlite3.connect(DATABASE) as connection:
+        cursor = connection.cursor()
+        cursor.execute("DELETE FROM articles WHERE date < ?", (delete_before_date,))
+        connection.commit()
     print(f'Articles older than {delete_before_date} have been deleted.')
 
 '''The bot starts looping the task once it's connected'''
@@ -100,4 +108,5 @@ async def on_ready():
 
 '''Starts the bot so it connects to discord'''
 if __name__ == "__main__":
+    create_table()
     bot.run(TOKEN)

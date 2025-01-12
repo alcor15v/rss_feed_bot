@@ -1,5 +1,5 @@
 # Discord RSS Bot
-A lightweight Discord bot that checks RSS feeds for new posts and shares them in a designated Discord channel. It can also filter posts based on keywords in the title. While it should work with any RSS feed, it's been tested mainly with Reddit feeds.
+A lightweight self-hosted Discord bot that checks RSS feeds for new posts and shares them in a designated Discord channel. It can also filter posts based on keywords in the title. While it should work with any RSS feed, it's been tested mainly with Reddit feeds.
 
 ## What It Does
 - Periodically scans the RSS feed for new posts.
@@ -41,3 +41,6 @@ Here's an example of the embed message the bot sends:
 ---
 
 If you'd like additional features or run into issues, feel free to drop a note in the Issues section!
+
+## Credits
+https://hansimcklaus.iwr.sh/post/how-to-create-a-simple-rss-bot-for-discord/

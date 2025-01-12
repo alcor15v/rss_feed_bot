@@ -85,7 +85,7 @@ def record_article_in_db(article):
 
 '''Deletes old articles from the database'''
 @tasks.loop(hours=24)
-def delete_old_articles():
+async def delete_old_articles():
     delete_before_date = (datetime.now() - timedelta(days=LAST_ARTICLE_RANGE)).strftime('%Y-%m-%d')
     c.execute("DELETE FROM articles WHERE date < ?", (delete_before_date,))
     connection.commit()

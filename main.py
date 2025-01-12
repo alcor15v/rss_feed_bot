@@ -55,7 +55,7 @@ def format_to_message(article):
     if article["keyword_filter"].upper() in (article["article"].title).upper():
         article_title = article["article"].title
         article_link = article["article"].link
-        article_content = extract_content(str(article["article"].content[0].value))
+        article_content = str(article["article"].content[0].value) #extract_content(str(article["article"].content[0].value))
         # Truncates the content if it exceeds the limit set
         if len(article_content) > CONTENT_SIZE:
             article_content = f"{article_content[:CONTENT_SIZE]}..."

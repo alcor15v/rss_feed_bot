@@ -13,7 +13,6 @@ bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 async def post_new_articles_task():
     channel = await bot.fetch_channel(CHANNEL_ID)
     new_articles = get_new_articles()
-    print(f"Found {len(new_articles)} new articles")
     for article in new_articles:
         message = extract_data(article)
         if message != IGNORE:

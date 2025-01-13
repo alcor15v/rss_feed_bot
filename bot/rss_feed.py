@@ -11,7 +11,7 @@ from config import LAST_ARTICLE_RANGE, RSS_FEEDS, CONTENT_SIZE, IGNORE
 def get_new_articles():
     new_articles = []
     for rss_feed in RSS_FEEDS:
-        print(f"URL: {rss_feed["url"]}")
+        print(f"URL: {rss_feed['url']}")
         entries = feedparser.parse(rss_feed["url"]).entries
         print(entries)
         for entry in entries:

@@ -1,4 +1,5 @@
 import feedparser
+import requests
 from datetime import datetime, timedelta, timezone
 from bs4 import SoupStrainer, BeautifulSoup
 import re
@@ -11,9 +12,7 @@ from config import LAST_ARTICLE_RANGE, RSS_FEEDS, CONTENT_SIZE, IGNORE
 def get_new_articles():
     new_articles = []
     for rss_feed in RSS_FEEDS:
-        print(f"URL: {rss_feed['url']}")
-        entries = feedparser.parse(rss_feed["url"]).entries
-        print(entries)
+        entries = feedparser.parse(requests.get(rss_feed['url'], headers={'User-Agent': 'Mozilla/5.0'}).content).entries
         for entry in entries:
             if not article_in_db(entry):
                 pub_date = datetime.strptime(entry.published, "%Y-%m-%dT%H:%M:%S%z").replace(tzinfo=timezone.utc)

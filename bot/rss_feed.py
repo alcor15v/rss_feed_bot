@@ -1,6 +1,5 @@
 import feedparser
 from datetime import datetime, timedelta, timezone
-import discord
 from bs4 import SoupStrainer, BeautifulSoup
 import re
 

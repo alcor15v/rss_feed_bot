@@ -5,7 +5,7 @@ import re
 
 from db import article_in_db
 from formatting import create_embed
-from config import LAST_ARTICLE_RANGE, RSS_FEEDS, CONTENT_SIZE
+from config import LAST_ARTICLE_RANGE, RSS_FEEDS, CONTENT_SIZE, IGNORE
 
 '''Looks for new articles to post them'''
 def get_new_articles():
@@ -30,7 +30,7 @@ def extract_data(article):
             article_content = f"{article_content[:CONTENT_SIZE]}..."
         message = create_embed(article_title, article_link, article_content)
     else:
-        message = ""
+        message = IGNORE
     return message
 
 '''Extracts the content from the HTML'''

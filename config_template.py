@@ -26,3 +26,6 @@ EMPTY_BODY = '_ _'
 
 # Color of the embed
 EMBED_COLOR = '#13224F'
+
+# Constants - IGNORE
+IGNORE = 'YES'

@@ -6,7 +6,7 @@ import re
 
 from db import article_in_db
 from formatting import create_embed
-from config import LAST_ARTICLE_RANGE, RSS_FEEDS, CONTENT_SIZE, IGNORE
+from config import LAST_ARTICLE_RANGE, RSS_FEEDS, CONTENT_SIZE, IGNORE, EMPTY_BODY
 
 '''Looks for new articles to post them'''
 def get_new_articles():
@@ -29,7 +29,10 @@ def extract_data(article):
     if article["keyword_filter"].upper() in (article["article"].title).upper():
         article_title = article["article"].title
         article_link = article["article"].link
-        article_content = extract_content(str(article["article"].content[0].value))
+        try:
+            article_content = extract_content(str(article["article"].content[0].value))
+        except:
+            article_content = EMPTY_BODY
         # Truncates the content if it exceeds the limit set
         if len(article_content) > CONTENT_SIZE:
             article_content = f"{article_content[:CONTENT_SIZE]}..."

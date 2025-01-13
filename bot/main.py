@@ -28,8 +28,8 @@ async def delete_old_articles_task():
 @bot.listen()
 async def on_ready():
     print(f'{bot.user} has connected to Discord!')
-    bot_tasks.post_new_articles.start()
-    bot_tasks.delete_old_articles.start()
+    post_new_articles_task.start()
+    delete_old_articles_task.start()
 
 '''Starts the bot so it connects to discord'''
 if __name__ == "__main__":

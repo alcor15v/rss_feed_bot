@@ -15,7 +15,10 @@ def get_new_articles():
         entries = feedparser.parse(requests.get(rss_feed['url'], headers={'User-Agent': 'Mozilla/5.0'}).content).entries
         for entry in entries:
             if not article_in_db(entry):
-                pub_date = datetime.strptime(entry.published, "%Y-%m-%dT%H:%M:%S%z").replace(tzinfo=timezone.utc)
+                try:
+                    pub_date = datetime.strptime(entry.published, "%Y-%m-%dT%H:%M:%S%z").replace(tzinfo=timezone.utc)
+                except:
+                    pub_date = datetime.strptime(entry.published, "%a, %d %b %Y %H:%M:%S %z").replace(tzinfo=timezone.utc)
                 if datetime.now(timezone.utc) - pub_date <= timedelta(days=LAST_ARTICLE_RANGE):
                     new_articles.append({"article": entry, "keyword_filter":rss_feed["keyword_filter"]})
     return new_articles

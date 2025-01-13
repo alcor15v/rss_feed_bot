@@ -34,7 +34,7 @@ Here's an example of the embed message the bot sends:
 
 3. **Install dependencies:** Run `pip install -r requirements.txt` to install required Python libraries.
 
-4. **Make sure `main.py` and `config.py` are in the same directory.**
+4. **Make sure that `config.py` is in the same directory as the other Python files.**
 
 5. **Run `main.py`.**
 

@@ -31,6 +31,7 @@ Here's an example of the embed message the bot sends:
       - Content size: The maximum number of characters to display from the body of each post.
       - Empty body: The message the bot should send if a post has no body.
       - Embed color: The hexadecimal color code for the embed message.
+    - The constants section should not be modified.
 
 3. **Install dependencies:** Run `pip install -r requirements.txt` to install required Python libraries.
 

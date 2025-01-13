@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands, tasks
 
-import bot_tasks
 from rss_feed import get_new_articles, extract_data
 from db import create_table, delete_old_articles, record_article_in_db
 from config import TOKEN, CHANNEL_ID, UPDATE_INTERVAL

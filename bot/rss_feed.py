@@ -25,7 +25,6 @@ def get_new_articles():
 
 '''Makes the content of the post look cleaner'''
 def extract_data(article):
-    print(article)
     if article["keyword_filter"].upper() in (article["article"].title).upper():
         article_title = article["article"].title
         article_link = article["article"].link
